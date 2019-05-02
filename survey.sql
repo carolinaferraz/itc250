@@ -1,34 +1,6 @@
 /*
   starter.sql - updated 4/17/2014
   
-  Here are a few notes on things below that may not be self evident:
-  
-  INDEXES: You'll see indexes below for example:
-  
-  INDEX SurveyID_index(SurveyID)
-  
-  Any field that has highly unique data that is either searched on or used as a join should be indexed, which speeds up a  
-  search on a tall table, but potentially slows down an add or delete
-  
-  TIMESTAMP: MySQL currently only supports one date field per table to be automatically updated with the current time.  We'll use a 
-  field in a few of the tables named LastUpdated:
-  
-  LastUpdated TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP
-  
-  The other date oriented field we are interested in, DateAdded we'll do by hand on insert with the MySQL function NOW().
-  
-  CASCADES: In order to avoid orphaned records in deletion of a Survey, we'll want to get rid of the associated Q & A, etc. 
-  We therefore want a 'cascading delete' in which the deletion of a Survey activates a 'cascade' of deletions in an 
-  associated table.  Here's what the syntax looks like:  
-  
-  FOREIGN KEY (SurveyID) REFERENCES srv_surveys(SurveyID) ON DELETE CASCADE
-  
-  The above is from the Questions table, which stores a foreign key, SurveyID in it.  This line of code tags the foreign key to 
-  identify which associated records to delete.
-  
-  Be sure to check your cascades by deleting a survey and watch all the related table data disappear!
-  
-  
 */
 
 
@@ -80,7 +52,6 @@ UserID INT UNSIGNED NOT NULL AUTO_INCREMENT,
 QuestionID INT UNSIGNED DEFAULT 0,
 Username VARCHAR(255) DEFAULT '',
 Email VARCHAR(255) DEFAULT '',
-
 PRIMARY KEY (UserID),
 INDEX QuestionID_index(QuestionID),
 FOREIGN KEY (QuestionID) REFERENCES srv_questions(QuestionID) ON DELETE CASCADE
